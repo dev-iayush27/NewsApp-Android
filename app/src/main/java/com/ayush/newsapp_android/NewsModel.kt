@@ -1,24 +1,23 @@
 package com.ayush.newsapp_android
 
-data class News(val title: String, val description: String)
+data class News (
+    val status: String,
+    val totalResults: Long,
+    val articles: List<Article>
+)
 
-fun getNewsList(): List<News> {
-    return listOf(
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers."),
-        News(title = "Can You Really Make Money on Twitter?",
-            description = "Twitter has launched two new features, Super Follows and Ticketed Spaces, that the company says will help creators make money off of their followers.")
-    )
-}
+data class Article (
+    val source: Source,
+    val author: String,
+    val title: String,
+    val description: String,
+    val url: String,
+    val urlToImage: String,
+    val publishedAt: String,
+    val content: String
+)
+
+data class Source (
+    val id: String? = null,
+    val name: String
+)
