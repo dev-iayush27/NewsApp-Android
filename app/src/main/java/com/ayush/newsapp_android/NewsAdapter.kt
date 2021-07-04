@@ -1,5 +1,6 @@
 package com.ayush.newsapp_android
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,7 @@ class NewsAdapter(private val newsList: List<News>): RecyclerView.Adapter<NewsAd
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.title.text = newsList[position].title
-        holder.description.text = newsList[position].description
+        holder.bind(newsList[position])
     }
 
     override fun getItemCount(): Int {
@@ -23,7 +23,17 @@ class NewsAdapter(private val newsList: List<News>): RecyclerView.Adapter<NewsAd
     }
 
     class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.news_title)
-        val description: TextView = itemView.findViewById(R.id.description)
+        private val title: TextView = itemView.findViewById(R.id.news_title)
+        private val description: TextView = itemView.findViewById(R.id.description)
+        private var parent = itemView
+
+        fun bind(model: News) {
+            title.text = model.title
+            description.text = model.description
+
+            itemView.setOnClickListener {
+                parent.context.startActivity(Intent(parent.context, NewsDetailActivity::class.java))
+            }
+        }
     }
 }
