@@ -6,7 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ayush.newsapp_android.adapter.NewsAdapter
+import com.ayush.newsapp_android.newsInterface.ServiceInterface
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -43,19 +47,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun callAPI() {
         var rf = Retrofit.Builder()
-            .baseUrl(RetrofitInterface.BASE_URL)
+            .baseUrl(ServiceInterface.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(RetrofitInterface::class.java)
-        var rfData = rf.getHeadlines("us", "24a147d201c448d39c57a5ff8ea1abc8")
-        rfData?.enqueue(object : Callback<News?> {
-            override fun onResponse(call: Call<News?>, response: Response<News?>) {
+            .create(ServiceInterface::class.java)
+        var api = rf.getTopHeadlines("us", "24a147d201c448d39c57a5ff8ea1abc8")
+        api?.enqueue(object : Callback<NewsModel?> {
+            override fun onResponse(call: Call<NewsModel?>, response: Response<NewsModel?>) {
+                progress_circular.visibility = View.GONE
                 val response = response.body()!!
                 newsAdapter = NewsAdapter(baseContext, response)
                 newsAdapter.notifyDataSetChanged()
                 recycler_view.adapter = newsAdapter
             }
-            override fun onFailure(call: Call<News?>, t: Throwable) {
+            override fun onFailure(call: Call<NewsModel?>, t: Throwable) {
+                progress_circular.visibility = View.GONE
+                Toast.makeText(applicationContext, "Something went wrong.", Toast.LENGTH_LONG).show()
                 Log.d("MainActivity", "onFailure: "+t.message)
             }
         })

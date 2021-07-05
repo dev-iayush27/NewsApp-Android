@@ -1,6 +1,6 @@
 package com.ayush.newsapp_android
 
-data class News (
+data class NewsModel (
     val status: String,
     val totalResults: Long,
     val articles: List<Article>
