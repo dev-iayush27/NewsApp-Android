@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //to change title of activity
+        val actionBar = supportActionBar
+        actionBar?.title = "News"
+
         configureRecyclerView()
         callAPI()
     }

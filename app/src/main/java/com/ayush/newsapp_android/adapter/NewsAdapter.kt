@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ayush.newsapp_android.Article
-import com.ayush.newsapp_android.NewsDetailActivity
-import com.ayush.newsapp_android.NewsModel
-import com.ayush.newsapp_android.R
+import com.ayush.newsapp_android.*
 import com.bumptech.glide.Glide
 
 class NewsAdapter(val context: Context, private val news: NewsModel): RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
@@ -31,18 +28,20 @@ class NewsAdapter(val context: Context, private val news: NewsModel): RecyclerVi
 
     class NewsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val title: TextView = itemView.findViewById(R.id.news_title)
-        private val description: TextView = itemView.findViewById(R.id.description)
+        private val publishedDate: TextView = itemView.findViewById(R.id.publishedDate)
         private val newsImage: ImageView = itemView.findViewById(R.id.item_image)
 
         fun bind(model: Article) {
             title.text = model.title
-            description.text = model.description
+            publishedDate.text = convertDate(model.publishedAt, "dd MMM, yyyy hh:mm a")
             Glide.with(newsImage)
                 .load(model.urlToImage)
                 .into(newsImage)
 
             itemView.setOnClickListener {
-                itemView.context.startActivity(Intent(itemView.context, NewsDetailActivity::class.java))
+                itemView.context.startActivity(
+                    Intent(itemView.context, NewsDetailActivity::class.java)
+                )
             }
         }
     }
